@@ -3,6 +3,8 @@ import os
 from flask import Flask, render_template, request, g, flash, abort, session, redirect, url_for
 from FDataBase import FDataBase
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import LoginManager, login_user, login_required, logout_user, current_user
+from UserLogin import UserLogin
 
 # конфігурація
 DATABASE = '/tmp/flsite.db'
@@ -13,6 +15,17 @@ app = Flask(__name__)
 app.config.from_object(__name__)
 
 app.config.update(dict(DATABASE=os.path.join(app.root_path, 'flsite.db')))
+
+login_manager = LoginManager(app)
+login_manager.login_view = 'login'
+login_manager.login_message = "Авторизуйтесь для доступу до закритих сторінок!"
+login_manager.login_message_category = "success"
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    print("load_user")
+    return UserLogin().fromDB(user_id, dbase)
 
 
 def connect_db():
@@ -81,6 +94,7 @@ def addPost():
 
 
 @app.route("/post/<int:id_post>")
+@login_required
 def showPost(id_post):
     title, post = dbase.getPost(id_post)
     if not title:
@@ -89,9 +103,22 @@ def showPost(id_post):
     return render_template('post.html', menu=dbase.getMenu(), title=title, post=post)
 
 
-@app.route("/login")
+@app.route("/login", methods=["POST", "GET"])
 def login():
-    return render_template("login.html", menu=dbase.getMenu(), title="Авторизація")
+    if current_user.is_authenticated:
+        return redirect(url_for('profile'))
+
+    if request.method == "POST":
+        user = dbase.getUserByEmail(request.form['email'])
+        if user and check_password_hash(user['psw'], request.form['psw']):
+            userlogin = UserLogin().create(user)
+            rm = True if request.form.get('remainme') else False
+            login_user(userlogin, remember=rm)
+            return redirect(request.args.get("next") or url_for("profile"))
+
+        flash("Неправильна пара логін/пароль", "error")
+
+    return render_template("login.html", menu=dbase.getMenu(), title="Авторизация")
 
 
 @app.route("/register", methods=["POST", "GET"])
@@ -111,6 +138,21 @@ def register():
             flash("Неправильно заповнені поля", "error")
 
     return render_template("register.html", menu=dbase.getMenu(), title="Реєстрація")
+
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    flash("Ви вийшли з облікового запису ", "success")
+    return redirect(url_for('login'))
+
+
+@app.route('/profile')
+@login_required
+def profile():
+    return f"""<a href="{url_for('logout')}">Вийти з облікового запису</a>
+                user info: {current_user.get_id()}"""
 
 
 if __name__ == "__main__":
