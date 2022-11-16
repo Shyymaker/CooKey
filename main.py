@@ -118,7 +118,7 @@ def login():
 
         flash("Неправильна пара логін/пароль", "error")
 
-    return render_template("login.html", menu=dbase.getMenu(), title="Авторизация")
+    return render_template("login.html", menu=dbase.getMenu(), title="Авторизація")
 
 
 @app.route("/register", methods=["POST", "GET"])
