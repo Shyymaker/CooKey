@@ -164,14 +164,17 @@ def gene():
     global name
     if request.method == "POST":
         length = int(request.form.get('name'))
-        if request.form.get('sym') == '+':
-            name = generate(length, symbols=True, uppercase=False)
-        if request.form.get('upper') == '+':
-            name = generate(length, symbols=False, uppercase=True)
-        if request.form.get('sym') == '+' and request.form.get('upper') == '+':
-            name = generate(length, symbols=True, uppercase=True)
-        if request.form.get('sym') != '+' and request.form.get('upper') != '+':
-            name = generate(length, symbols=False, uppercase=False)
+        if length >= 5 and length <= 20:
+            if request.form.get('sym') == '+':
+                name = generate(length, symbols=True, uppercase=False)
+            if request.form.get('upper') == '+':
+                name = generate(length, symbols=False, uppercase=True)
+            if request.form.get('sym') == '+' and request.form.get('upper') == '+':
+                name = generate(length, symbols=True, uppercase=True)
+            if request.form.get('sym') != '+' and request.form.get('upper') != '+':
+                name = generate(length, symbols=False, uppercase=False)
+        else:
+            flash("Допустима довжина паролю від 5 до 20!", "error")
 
     return render_template("generator.html", menu=dbase.getMenu(), title="Генератор паролів", name=name)
 
