@@ -2,21 +2,22 @@ import string
 import secrets
 
 
-# class generator():
-def generate(length, symbols, uppercase):
-    combination = string.ascii_lowercase + string.digits
+class generator():
 
-    if symbols:
-        combination += string.punctuation
+    def generate(length, symbols, uppercase):
+        combination = string.ascii_lowercase + string.digits
 
-    if uppercase:
-        combination += string.ascii_uppercase
+        if symbols:
+            combination += string.punctuation
 
-    combination_length = len(combination)
+        if uppercase:
+            combination += string.ascii_uppercase
 
-    new_password = ""
+        combination_length = len(combination)
 
-    for _ in range(length):
-        new_password += combination[secrets.randbelow(combination_length)]
+        new_password = ""
 
-    return new_password
+        for _ in range(length):
+            new_password += combination[secrets.randbelow(combination_length)]
+
+        return new_password

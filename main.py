@@ -5,7 +5,7 @@ from FDataBase import FDataBase
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from UserLogin import UserLogin
-from generator import generate
+from generator import generator
 import ast
 
 # конфігурація
@@ -160,19 +160,19 @@ def profile():
 
 @app.route("/generator", methods=["POST", "GET"])
 @login_required
-def gene():
+def generation():
     global name
     if request.method == "POST":
         length = int(request.form.get('name'))
         if length >= 5 and length <= 20:
             if request.form.get('sym') == '+':
-                name = generate(length, symbols=True, uppercase=False)
+                name = generator.generate(length, symbols=True, uppercase=False)
             if request.form.get('upper') == '+':
-                name = generate(length, symbols=False, uppercase=True)
+                name = generator.generate(length, symbols=False, uppercase=True)
             if request.form.get('sym') == '+' and request.form.get('upper') == '+':
-                name = generate(length, symbols=True, uppercase=True)
+                name = generator.generate(length, symbols=True, uppercase=True)
             if request.form.get('sym') != '+' and request.form.get('upper') != '+':
-                name = generate(length, symbols=False, uppercase=False)
+                name = generator.generate(length, symbols=False, uppercase=False)
         else:
             flash("Допустима довжина паролю від 5 до 20!", "error")
 
