@@ -5,6 +5,8 @@ from FDataBase import FDataBase
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from UserLogin import UserLogin
+from generator import generate
+import ast
 
 # конфігурація
 DATABASE = '/tmp/flsite.db'
@@ -20,6 +22,7 @@ login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 login_manager.login_message = "Авторизуйтесь для доступу до закритих сторінок!"
 login_manager.login_message_category = "success"
+name = 0
 
 
 @login_manager.user_loader
@@ -153,6 +156,24 @@ def logout():
 def profile():
     return f"""<a href="{url_for('logout')}">Вийти з облікового запису</a>
                 user info: {current_user.get_id()}"""
+
+
+@app.route("/generator", methods=["POST", "GET"])
+@login_required
+def gene():
+    global name
+    if request.method == "POST":
+        length = int(request.form.get('name'))
+        if request.form.get('sym') == '+':
+            name = generate(length, symbols=True, uppercase=False)
+        if request.form.get('upper') == '+':
+            name = generate(length, symbols=False, uppercase=True)
+        if request.form.get('sym') == '+' and request.form.get('upper') == '+':
+            name = generate(length, symbols=True, uppercase=True)
+        if request.form.get('sym') != '+' and request.form.get('upper') != '+':
+            name = generate(length, symbols=False, uppercase=False)
+
+    return render_template("generator.html", menu=dbase.getMenu(), title="Генератор паролів", name=name)
 
 
 if __name__ == "__main__":

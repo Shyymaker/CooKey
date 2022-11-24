@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{{ super() }}
+{% for cat, msg in get_flashed_messages(True) %}
+<div class="flash {{cat}}">{{msg}}</div>
+{% endfor %}
+<form action="" method="post" class="form-contact">
+    <p><label>Ваш новий пароль: </label>
+        {% if name %}
+        {{ name }}
+        {% endif %}
+    <p><label>Вкажіть довжину паролю </label>
+        <input type="text" name="name" value="" required/>
+    <p><label>Добавити символи </label> <input type="checkbox" name="sym" value="+"/>
+    <p><label>Добавити великі букви </label> <input type="checkbox" name="upper" value="+"/>
+    <p><label> <input type="submit" value="Згенерувати"/>
+    <p><a href="{{url_for('index')}}">На головну</a>
+</form>
+{% endblock %}
