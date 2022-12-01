@@ -20,7 +20,7 @@ app.config.update(dict(DATABASE=os.path.join(app.root_path, 'flsite.db')))
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 login_manager.login_message = "Авторизуйтесь для доступу до закритих сторінок!"
-login_manager.login_message_category = "success"
+login_manager.login_message_category = "error"
 name = 0
 
 
