@@ -165,6 +165,7 @@ def profile():
 
 
 @app.route("/generator", methods=["POST", "GET"])
+@login_required
 def generation():
     global name
     if request.method == "POST":
