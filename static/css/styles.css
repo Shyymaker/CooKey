@@ -9,6 +9,7 @@ html, body {
 	padding: 0;
 	height: 100%;
 	width: 100%;
+
 }
 
 .tab4 {
@@ -61,6 +62,7 @@ ul.mainmenu {
 	font-size: 20px;
 	overflow: hidden;
 	background-image: url(../image/cookie3.png);
+	width: 1547px;
 }
 ul.mainmenu li {
 	float: left;
