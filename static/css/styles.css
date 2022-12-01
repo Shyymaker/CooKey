@@ -1,13 +1,33 @@
 html, body {
-	font-family: 'Arial';
-	margin: 0;
+	font-family: 'Century Gothic';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 44px;
+    background: #C6B299;
+    margin: 0;
 	padding: 0;
 	height: 100%;
 	width: 100%;
 }
 
+.tab4 {
+    display: inline-block;
+    margin-left: 450px;
+}
+
+input {
+    background: #FFFFFF;
+    border-radius: 10px;
+}
+
+textarea {
+    background: #FFFFFF;
+    border-radius: 10px;
+}
+
 a {
-	color: #0059b2;
+	color: #685A49;
 	text-decoration: none;
 }
 a:hover {
@@ -17,24 +37,39 @@ a:hover {
 
 .clear {clear: both;}
 
+h2 {
+    margin-left: 35px;
+    font-family: 'Century Gothic';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 49px;
+
+    text-align: left;
+    text-transform: capitalize;
+
+    color: #000000;
+}
+
 ul.mainmenu {
 	list-style: none;
-	background: #3F4137;
-	height: 60px;
-	margin: 0;
+	background: linear-gradient(180deg, #FFFFFF 49.64%, rgba(255, 255, 255, 0) 117.99%);
+	height: 100px;
+	margin: -12px;
 	padding: 0;
 	color: #fdc073;
 	font-size: 20px;
 	overflow: hidden;
+	background-image: url(../image/cookie3.png);
 }
 ul.mainmenu li {
 	float: left;
-	margin: 18px 40px 0 50px;
+	margin: 35px 40px 0 50px;
 }
 ul.mainmenu li.last {float: right;}
 
 ul.mainmenu li a {
-	color: #fdc073;
+	color: #000000;
 	text-decoration: none;
 }
 ul.mainmenu li a:hover {
@@ -58,10 +93,12 @@ div.content {
 .flash.success {
 	border: 1px solid #21DB56;
 	background: #AEFFC5;
+	border-radius: 20px;
 }
 .flash.error {
 	border: 1px solid #FF4343;
 	background: #FF9C9C;
+	border-radius: 20px;
 }
 
 ul.list-posts {
@@ -71,17 +108,35 @@ ul.list-posts {
 	max-width: 600px;
 }
 ul.list-posts li {
-	margin: 20px 0 0 0;
-	border: 1px solid #eee;
+	margin: 20px 0px 0px 32px;
+	background: rgba(255, 255, 255, 0.5);
+	border-radius: 20px;
 }
 ul.list-posts .title {
-	margin: 0;
+	margin: 0px 0px -50px 0px;
 	padding: 5px;
-	background: #eee;
+    background: #FFFFFF;
+    border-radius: 20px;
+    background-image: url(../image/cookie2.png);
 }
+
+ul.list-posts li p a{
+    margin-left: 9px;
+    font-family: 'Century Gothic';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 44px;
+    text-align: center;
+    text-transform: capitalize;
+
+    color: #000000;
+}
+
 ul.list-posts .annonce {
 	margin: 0;
-	padding: 10px 5px 10px 5px;
+	padding: 80px 5px 10px 5px;
+	color: #685A49;
 }
 
 .profile-ava {

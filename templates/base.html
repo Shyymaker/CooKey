@@ -17,14 +17,18 @@
     {% for p in menu %}
     <li><a href="{{p.url}}">{{p.title}}</a></li>
     {% endfor %}
+    <img class="tab4" src="static/image/cookie.png" width="110px" height="105px">
 </ul>
+<hr color="#685A49">
 <div class="clear"></div>
 <div class="content">
     {% endblock mainmenu -%}
     {% if title -%}
     <h1>{{title}}</h1>
+    <hr color="#685A49" width="100%">
     {% else -%}
     <h1>Password Manager</h1>
+    <hr color="#685A49" width="100%">
     {% endif -%}
     {% endblock -%}
 </div>
