@@ -94,6 +94,9 @@ def addPost():
 
     return render_template('add_post.html', menu=dbase.getMenu(), title="Додавання статті")
 
+@app.route("/about_us")
+def about():
+    return render_template('about_us.html', menu=dbase.getMenu(), title="Про нас")
 
 @app.route("/post/<int:id_post>")
 @login_required
