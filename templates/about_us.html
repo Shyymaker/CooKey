@@ -2,5 +2,7 @@
 
 {% block content %}
 {{ super() }}
-<p>Зміст сторінки "Про сайт"
-    {% endblock %}
+    <p>Зміст сторінки "Про нас"
+    <hr align=left width="300px" color="#685A49">
+    <p><a href="{{url_for('contact')}}">Зв'язатись з нами</a>
+{% endblock %}
