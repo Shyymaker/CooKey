@@ -10,10 +10,9 @@
         {% if name %}
         {{ name }}
         {% endif %}
-    <p><label>Вкажіть довжину паролю </label>
-        <input type="text" name="name" value="" required/>
-    <p><label>Добавити символи </label> <input type="checkbox" name="sym" value="+"/>
-    <p><label>Добавити великі букви </label> <input type="checkbox" name="upper" value="+"/>
+    <p><label>Вкажіть довжину паролю </label> <input type="text" name="name" value="" required/>
+    <p><label for="add_symbols" >Добавити символи </label> <input type="checkbox" id="add_symbols" name="sym" value="+"/>
+    <p><label for="add_uppercase">Добавити великі букви </label> <input type="checkbox" id="add_uppercase" name="upper" value="+"/>
     <p><label> <input type="submit" value="Згенерувати"/>
     <hr align=left width="300px" color="#685A49">
     <p><a href="{{url_for('index')}}">На головну</a>
