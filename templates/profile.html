@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{{ super() }}
+    <p>Зміст сторінки "Мій профіль"
+    <hr align=left width="300px" color="#685A49">
+    <p><a href="{{url_for('logout')}}">Вийти з облікового запису: user info: {{current_user.get_id()}}</a>
+{% endblock %}
