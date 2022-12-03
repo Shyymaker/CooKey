@@ -153,3 +153,51 @@ ul.list-posts .annonce {
 	padding: 80px 5px 10px 5px;
 	color: #685A49;
 }
+
+.profile-ava {
+	width: 170px;
+	text-align: center;
+	overflow: hidden;
+	padding: 10px;
+}
+
+.profile-ava img {max-width: 170px; height: auto;}
+
+.profile-load {
+	margin-top: 10px;
+	overflow: hidden;
+	max-width: 170px;
+}
+
+.profile-load input[type=submit] {
+	width: 100%;
+	font-size: 18px;
+}
+
+.profile-load input[type=submit]:hover {
+    background: #685A49;
+    color: #FFFFFF;
+	width: 100%;
+	font-size: 18px;
+}
+
+.profile-load input[type=file] {
+	width: 100%;
+	font-size: 18px;
+}
+
+.profile-load p {
+	padding: 0;
+	margin: 5px 0 0 0;
+}
+
+.profile-panel {padding: 0 0 0 10px;}
+
+ul.profile-info {
+	list-style: none;
+	margin: 10px 0 0 0;
+	padding: 0;
+	color: #000000;
+	text-decoration: none;
+}
+ul.profile-info li {margin-top: 10px;}

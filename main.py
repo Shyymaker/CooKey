@@ -1,6 +1,6 @@
 import sqlite3
 import os
-from flask import Flask, render_template, request, g, flash, abort, session, redirect, url_for
+from flask import Flask, render_template, request, g, flash, abort, session, redirect, url_for, make_response
 from FDataBase import FDataBase
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
@@ -11,6 +11,7 @@ from generator import generator
 DATABASE = '/tmp/flsite.db'
 DEBUG = True
 SECRET_KEY = 'kdfkallKFLKSj40129iljdkasd39291'
+MAX_CONTENT_LENGTH = 1024 * 1024
 
 app = Flask(__name__)
 app.config.from_object(__name__)
@@ -94,13 +95,16 @@ def addPost():
 
     return render_template('add_post.html', menu=dbase.getMenu(), title="Додавання статті")
 
+
 @app.route("/about_us")
 def about():
     return render_template('about_us.html', menu=dbase.getMenu(), title="Про нас")
 
+
 @app.route("/contact")
 def contact():
     return render_template('contact.html', menu=dbase.getMenu(), title="Зворотій зв'язок")
+
 
 @app.route("/post/<int:id_post>")
 @login_required
@@ -182,6 +186,38 @@ def generation():
             flash("Допустима довжина паролю від 5 до 20!", "error")
 
     return render_template("generator.html", menu=dbase.getMenu(), title="Генератор паролів", name=name)
+
+
+@app.route('/userava')
+@login_required
+def userava():
+    img = current_user.getAvatar(app)
+    if not img:
+        return ""
+
+    h = make_response(img)
+    h.headers['Content-Type'] = 'image/png'
+    return h
+
+
+@app.route('/upload', methods=["POST", "GET"])
+@login_required
+def upload():
+    if request.method == 'POST':
+        file = request.files['file']
+        if file and current_user.verifyExt(file.filename):
+            try:
+                img = file.read()
+                res = dbase.updateUserAvatar(img, current_user.get_id())
+                if not res:
+                    flash("Помилка обновлення аватарки", "error")
+                flash("Аватар обновлений", "success")
+            except FileNotFoundError as e:
+                flash("Помилка зчитування файлу", "error")
+        else:
+            flash("Помилка обновлення аватарки", "error")
+
+    return redirect(url_for('profile'))
 
 
 if __name__ == "__main__":
