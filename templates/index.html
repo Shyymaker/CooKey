@@ -3,12 +3,12 @@
 {% block content %}
 {{ super() }}
 
-<h2>Список статей</h2>
+<h2>Збережені паролі</h2>
 <ul class="list-posts">
-    {% for p in posts %}
+    {% for p in passwords %}
     <li>
-        <p class="title"><a href="{{url_for('showPost', id_post=p.id)}}">{{p.title}}</a></p>
-        <p class="annonce">{{p.text[:50]}}</p>
+        <p class="title"><a href="{{url_for('showPsw', id_psw=p.id)}}">{{p.title}}</a></p>
+        <p class="annonce">{{p.psw[:50]}}</p>
     </li>
     {% endfor %}
 </ul>

@@ -1,6 +1,6 @@
 import sqlite3
 import os
-from flask import Flask, render_template, request, g, flash, abort, session, redirect, url_for, make_response
+from flask import Flask, render_template, request, g, abort, flash, session, redirect, url_for, make_response
 from FDataBase import FDataBase
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
@@ -55,7 +55,7 @@ def get_db():
 
 @app.route("/")
 def index():
-    return render_template('index.html', menu=dbase.getMenu(), posts=dbase.getPostsAnonce())
+    return render_template('index.html', menu=dbase.getMenu(), passwords=dbase.getPswAnonce(current_user.get_id()))
 
 
 dbase = None
@@ -81,19 +81,30 @@ def pageNotFount(error):
     return render_template('page404.html', title="Сторінку не знайдено", menu=dbase.getMenu())
 
 
-@app.route("/add_post", methods=["POST", "GET"])
-def addPost():
+@app.route("/my_psw", methods=["POST", "GET"])
+@login_required
+def addPsw():
     if request.method == "POST":
-        if len(request.form['name']) > 4 and len(request.form['post']) > 10:
-            res = dbase.addPost(request.form['name'], request.form['post'])
+        if len(request.form['name']) > 4 and len(request.form['psw']) > 10:
+            res = dbase.addPsw(current_user.get_id(), request.form['name'], request.form['psw'])
             if not res:
-                flash('Помилка при додаванні статі', category='error')
+                flash('Помилка збереження паролю', category='error')
             else:
-                flash('Стаття успішно додана', category='success')
+                flash('Пароль успішно доданий', category='success')
         else:
-            flash('Помилка при додаванні статі', category='error')
+            flash('Помилка збереження статті', category='error')
 
-    return render_template('add_post.html', menu=dbase.getMenu(), title="Додавання статті")
+    return render_template('my_psw.html', menu=dbase.getMenu(), title="Збереження паролів")
+
+
+@app.route("/psw/<int:id_psw>")
+@login_required
+def showPsw(id_psw):
+    title, psw = dbase.getPsw(id_psw)
+    if not title:
+        abort(404)
+
+    return render_template('psw.html', menu=dbase.getMenu(), title=title, psw=psw)
 
 
 @app.route("/about_us")
@@ -104,16 +115,6 @@ def about():
 @app.route("/contact")
 def contact():
     return render_template('contact.html', menu=dbase.getMenu(), title="Зворотій зв'язок")
-
-
-@app.route("/post/<int:id_post>")
-@login_required
-def showPost(id_post):
-    title, post = dbase.getPost(id_post)
-    if not title:
-        abort(404)
-
-    return render_template('post.html', menu=dbase.getMenu(), title=title, post=post)
 
 
 @app.route("/login", methods=["POST", "GET"])
