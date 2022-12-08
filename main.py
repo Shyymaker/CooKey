@@ -115,8 +115,18 @@ def about():
     return render_template('about_us.html', menu=dbase.getMenu(), title="Про нас")
 
 
-@app.route("/contact")
+@app.route("/contact", methods=["POST", "GET"])
 def contact():
+    if request.method == "POST":
+        if len(request.form['username']) > 0 and len(request.form['email']) > 0 and len(request.form['message']) > 0:
+            res = dbase.addMessage(request.form['username'], request.form['email'], request.form['message'])
+            if not res:
+                flash('Помилка надсилання повідомлення', category='error')
+            else:
+                flash('Повідомлення успішно надіслане, скоро з вами зв\'яжеться наша команда', category='success')
+        else:
+            flash('Помилка надсилання повідомлення', category='error')
+
     return render_template('contact.html', menu=dbase.getMenu(), title="Зворотній зв'язок")
 
 

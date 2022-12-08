@@ -107,3 +107,13 @@ class FDataBase:
             print("Помилка додавання статті у БД " + str(e))
 
         return []
+    def addMessage(self, name, email, message):
+        try:
+            tm = math.floor(time.time())
+            self.__cur.execute("INSERT INTO contact VALUES(NULL, ?, ?, ?, ?)", (name, email, message, tm))
+            self.__db.commit()
+        except sqlite3.Error as e:
+            print("Помилка додавання статті у БД " + str(e))
+            return False
+
+        return True

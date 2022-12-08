@@ -20,3 +20,11 @@ psw text NOT NULL,
 avatar BLOB DEFAULT NULL,
 time integer NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS contact (
+id integer PRIMARY KEY AUTOINCREMENT,
+name text NOT NULL,
+email text NOT NULL,
+message text NOT NULL,
+time integer NOT NULL
+);
