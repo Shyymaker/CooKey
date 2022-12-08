@@ -25,4 +25,14 @@
         </td>
     </tr>
 </table>
+<hr color="#685A49">
+<h2>Збережені паролі</h2>
+<ul class="list-posts">
+    {% for p in passwords %}
+    <li>
+        <p class="title"><a href="{{url_for('showPsw', id_psw=p.id)}}">{{p.title}}</a></p>
+        <p class="annonce">{{p.psw[:40]}}</p>
+    </li>
+    {% endfor %}
+</ul>
 {% endblock %}

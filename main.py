@@ -23,6 +23,7 @@ login_manager.login_view = 'login'
 login_manager.login_message = "Авторизуйтесь для доступу до закритих сторінок!"
 login_manager.login_message_category = "error"
 name = 0
+original = ""
 
 
 @login_manager.user_loader
@@ -55,7 +56,7 @@ def get_db():
 
 @app.route("/")
 def index():
-    return render_template('index.html', menu=dbase.getMenu(), passwords=dbase.getPswAnonce(current_user.get_id()))
+    return render_template('index.html', menu=dbase.getMenu())
 
 
 dbase = None
@@ -84,9 +85,12 @@ def pageNotFount(error):
 @app.route("/my_psw", methods=["POST", "GET"])
 @login_required
 def addPsw():
+    global original
     if request.method == "POST":
         if len(request.form['name']) > 4 and len(request.form['psw']) > 10:
-            res = dbase.addPsw(current_user.get_id(), request.form['name'], request.form['psw'])
+            original = request.form['psw']
+            hash = generate_password_hash(request.form['psw'])
+            res = dbase.addPsw(current_user.get_id(), request.form['name'], hash)
             if not res:
                 flash('Помилка збереження паролю', category='error')
             else:
@@ -101,6 +105,7 @@ def addPsw():
 @login_required
 def showPsw(id_psw):
     title, psw = dbase.getPsw(id_psw)
+    psw = original
     if not title:
         abort(404)
 
@@ -114,7 +119,7 @@ def about():
 
 @app.route("/contact")
 def contact():
-    return render_template('contact.html', menu=dbase.getMenu(), title="Зворотій зв'язок")
+    return render_template('contact.html', menu=dbase.getMenu(), title="Зворотній зв'язок")
 
 
 @app.route("/login", methods=["POST", "GET"])
@@ -165,11 +170,10 @@ def logout():
 @app.route('/profile')
 @login_required
 def profile():
-    return render_template('profile.html', menu=dbase.getMenu(), title="Мій профіль")
+    return render_template('profile.html', menu=dbase.getMenu(), title="Мій профіль", passwords=dbase.getPswAnonce(current_user.get_id()))
 
 
 @app.route("/generator", methods=["POST", "GET"])
-@login_required
 def generation():
     global name
     if request.method == "POST":
