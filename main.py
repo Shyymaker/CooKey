@@ -94,7 +94,7 @@ def addPsw():
             else:
                 flash('Пароль успішно доданий', category='success')
         else:
-            flash('Помилка збереження статті', category='error')
+            flash('Помилка збереження паролю', category='error')
 
     return render_template('my_psw.html', menu=dbase.getMenu(), title="Збереження паролів")
 
