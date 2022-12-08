@@ -6,6 +6,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from UserLogin import UserLogin
 from generator import generator
+from encryption import encryption
 
 # конфігурація
 DATABASE = '/tmp/flsite.db'
@@ -23,7 +24,6 @@ login_manager.login_view = 'login'
 login_manager.login_message = "Авторизуйтесь для доступу до закритих сторінок!"
 login_manager.login_message_category = "error"
 name = 0
-original = ""
 
 
 @login_manager.user_loader
@@ -85,12 +85,10 @@ def pageNotFount(error):
 @app.route("/my_psw", methods=["POST", "GET"])
 @login_required
 def addPsw():
-    global original
     if request.method == "POST":
         if len(request.form['name']) > 4 and len(request.form['psw']) > 10:
-            original = request.form['psw']
-            hash = generate_password_hash(request.form['psw'])
-            res = dbase.addPsw(current_user.get_id(), request.form['name'], hash)
+            encpassword = encryption.encrypt(request.form['psw'])
+            res = dbase.addPsw(current_user.get_id(), request.form['name'], encpassword)
             if not res:
                 flash('Помилка збереження паролю', category='error')
             else:
@@ -105,7 +103,7 @@ def addPsw():
 @login_required
 def showPsw(id_psw):
     title, psw = dbase.getPsw(id_psw)
-    psw = original
+    psw = encryption.decrypt(psw)
     if not title:
         abort(404)
 
@@ -170,7 +168,8 @@ def logout():
 @app.route('/profile')
 @login_required
 def profile():
-    return render_template('profile.html', menu=dbase.getMenu(), title="Мій профіль", passwords=dbase.getPswAnonce(current_user.get_id()))
+    return render_template('profile.html', menu=dbase.getMenu(), title="Мій профіль",
+                           passwords=dbase.getPswAnonce(current_user.get_id()))
 
 
 @app.route("/generator", methods=["POST", "GET"])
