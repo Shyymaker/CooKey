@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='image/favicon.png')}}">
     <link type="text/css" href="{{ url_for('static', filename='css/styles.css')}}" rel="stylesheet"/>
     {% block title -%}
     {% if title %}
@@ -17,7 +18,7 @@
     {% for p in menu %}
     <li><a href="{{p.url}}">{{p.title}}</a></li>
     {% endfor %}
-    <img class="tab4" src="../static/image/cookie.png" width="120px" height="110px">
+    <img class="tab4" src="../static/images/cookie.png" width="180px" height="90px">
 </ul>
 <hr color="#685A49" width="1534px">
 <div class="clear"></div>

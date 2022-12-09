@@ -210,7 +210,7 @@ def userava():
         return ""
 
     h = make_response(img)
-    h.headers['Content-Type'] = 'image/png'
+    h.headers['Content-Type'] = 'default_profile_img/png'
     return h
 
 
