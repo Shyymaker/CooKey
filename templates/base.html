@@ -5,9 +5,9 @@
     <link type="text/css" href="{{ url_for('static', filename='css/styles.css')}}" rel="stylesheet"/>
     {% block title -%}
     {% if title %}
-    <title>Password Manager - {{title}}</title>
+    <title>CooKey - {{title}}</title>
     {% else %}
-    <title>Password Manager</title>
+    <title>CooKey</title>
     {% endif %}
     {% endblock %}
 </head>
@@ -29,7 +29,20 @@
     <hr color="#685A49">
     {% else -%}
     <h1>Password Manager</h1>
-    <hr color="#685A49">
+    <hr color="#685A49" width="102%">
+    <div class="v19_4">
+        <span class="v62_3">ЗБЕРІГАЙТЕ ПАРОЛІ<br>
+НЕ КРИШІТЬ ЇХ ЯК ПЕЧЕНЬКИ
+</span>
+        <div class="v64_71"></div>
+        <div class="v62_54"></div>
+        <div class="v62_67"></div>
+        <span class="v62_45">КЕРУЙТЕ СВОЇМИ ПАРОЛЯМИ БЕЗПЕЧНО
+</span><span class="v62_46">CooKey пропонує позбутися стресу від постійного запам’ятовування паролів (а в 99.9% випадках - забування) та записування їх в окремий файл чи блокнот, що є дуже незручно та небезпечно.<br><br>
+Незалежно від вашого віку і роду занять простота нашого менеджера паролів дозволяє легко користуватися великим і, в першу чергу, корисним функціоналом.<br><br>
+З CooKey ви будете на крок попереду і з великою ймовірністю обведете навколо пальця зловмисників, що взявши ваш телефон в руки, намагатимуться отримати ваші паролі, дані та іншу важливу конфіденційну інформацію.</span>
+        <div class="v63_69"></div>
+    </div>
     {% endif -%}
     {% endblock -%}
 </div>
