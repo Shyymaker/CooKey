@@ -23,7 +23,6 @@ login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 login_manager.login_message = "Авторизуйтесь для доступу до закритих сторінок!"
 login_manager.login_message_category = "error"
-name = 0
 
 
 @login_manager.user_loader
@@ -184,7 +183,7 @@ def profile():
 
 @app.route("/generator", methods=["POST", "GET"])
 def generation():
-    global name
+    name = 0
     if request.method == "POST":
         length = int(request.form.get('name'))
         if length >= 5 and length <= 20:
